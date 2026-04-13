@@ -1,0 +1,288 @@
+/* Dashboard Page - Data Visualization Theme */
+
+body {
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+    font-family: 'Poppins', Arial, sans-serif;
+    background: linear-gradient(135deg, 
+        #1a1a2e 0%, 
+        #16213e 25%, 
+        #0f3460 50%, 
+        #533483 75%, 
+        #c41e3a 100%);
+    background-size: 300% 300%;
+    animation: dashboardShift 15s ease infinite;
+    position: relative;
+    overflow-x: hidden;
+}
+
+@keyframes dashboardShift {
+    0% { background-position: 0% 50%; }
+    25% { background-position: 50% 25%; }
+    50% { background-position: 100% 50%; }
+    75% { background-position: 50% 75%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Data grid pattern */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    z-index: -2;
+}
+
+/* Animated data bars */
+.data-bars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.data-bars::before,
+.data-bars::after,
+.data-bars .bar1,
+.data-bars .bar2,
+.data-bars .bar3 {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(to top, 
+        rgba(76, 175, 80, 0.6), 
+        rgba(255, 193, 7, 0.6), 
+        rgba(244, 67, 54, 0.6));
+    animation: dataBarGrow 4s infinite ease-in-out;
+}
+
+.data-bars::before {
+    left: 10%;
+    height: 60%;
+    animation-delay: 0s;
+}
+
+.data-bars::after {
+    left: 25%;
+    height: 80%;
+    animation-delay: 0.5s;
+}
+
+.data-bars .bar1 {
+    left: 40%;
+    height: 45%;
+    animation-delay: 1s;
+}
+
+.data-bars .bar2 {
+    left: 55%;
+    height: 70%;
+    animation-delay: 1.5s;
+}
+
+.data-bars .bar3 {
+    left: 70%;
+    height: 55%;
+    animation-delay: 2s;
+}
+
+@keyframes dataBarGrow {
+    0%, 100% { 
+        height: 20%; 
+        opacity: 0.3;
+    }
+    50% { 
+        height: var(--bar-height, 60%); 
+        opacity: 0.8;
+    }
+}
+
+/* Floating charts */
+.floating-charts {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.floating-charts::before,
+.floating-charts::after {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    animation: chartRotate 20s infinite linear;
+}
+
+.floating-charts::before {
+    top: 10%;
+    right: 15%;
+    animation-delay: 0s;
+}
+
+.floating-charts::after {
+    bottom: 15%;
+    left: 10%;
+    animation-delay: 5s;
+}
+
+@keyframes chartRotate {
+    0% { 
+        transform: rotate(0deg) scale(1); 
+        opacity: 0.3;
+    }
+    50% { 
+        transform: rotate(180deg) scale(1.1); 
+        opacity: 0.6;
+    }
+    100% { 
+        transform: rotate(360deg) scale(1); 
+        opacity: 0.3;
+    }
+}
+
+/* Pulse indicators */
+.pulse-indicators {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.pulse-indicators::before,
+.pulse-indicators::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    animation: pulse 3s infinite ease-in-out;
+}
+
+.pulse-indicators::before {
+    top: 20%;
+    left: 80%;
+    animation-delay: 0s;
+}
+
+.pulse-indicators::after {
+    top: 60%;
+    left: 20%;
+    animation-delay: 1.5s;
+}
+
+@keyframes pulse {
+    0%, 100% { 
+        transform: scale(1); 
+        opacity: 0.3;
+    }
+    50% { 
+        transform: scale(1.5); 
+        opacity: 0.1;
+    }
+}
+
+/* Dashboard container styling */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.1) 0%, 
+        rgba(255, 255, 255, 0.05) 100%);
+    pointer-events: none;
+}
+
+.container > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Stat cards styling */
+.stat {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.stat:hover {
+    transform: translateY(-5px);
+}
+
+/* Stress level colors */
+.normal { 
+    background: linear-gradient(135deg, #56ab2f, #a8e063); 
+    color: white;
+}
+.moderate { 
+    background: linear-gradient(135deg, #f2994a, #f2c94c); 
+    color: white;
+}
+.high { 
+    background: linear-gradient(135deg, #eb3349, #f45c43); 
+    color: white;
+}
+
+/* History items */
+.history-item {
+    background: rgba(255, 255, 255, 0.8);
+    border-left: 4px solid #667eea;
+    transition: all 0.3s ease;
+}
+
+.history-item:hover {
+    background: rgba(255, 255, 255, 0.95);
+    transform: translateX(5px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    body {
+        background-size: 200% 200%;
+        animation-duration: 10s;
+    }
+    
+    .container {
+        margin: 10px;
+        padding: 20px;
+    }
+}

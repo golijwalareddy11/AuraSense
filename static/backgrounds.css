@@ -1,0 +1,86 @@
+/* Stress-themed backgrounds for AuraSense pages */
+
+/* Login page - Calming blue gradient with subtle stress elements */
+.login-bg {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #c471f5 75%, #667eea 100%);
+    background-size: 400% 400%;
+    animation: stressGradient 15s ease infinite;
+}
+
+/* Dashboard page - Professional yet concerned gradient */
+.dashboard-bg {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 20%, #43e97b 40%, #38f9d7 60%, #4facfe 100%);
+    background-size: 400% 400%;
+    animation: stressGradient 20s ease infinite;
+}
+
+/* Questions page - Thoughtful, focused gradient */
+.questions-bg {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 25%, #fa709a 50%, #fee140 75%, #fa709a 100%);
+    background-size: 400% 400%;
+    animation: stressGradient 18s ease infinite;
+}
+
+/* Result page - Emotional spectrum gradient */
+.result-bg {
+    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 25%, #ffeaa7 50%, #dfe6e9 75%, #a8edea 100%);
+    background-size: 400% 400%;
+    animation: stressGradient 25s ease infinite;
+}
+
+/* Voice page - Sound wave inspired gradient */
+.voice-bg {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 25%, #4facfe 50%, #43e97b 75%, #f093fb 100%);
+    background-size: 400% 400%;
+    animation: stressGradient 12s ease infinite;
+}
+
+/* Welcome page - Warm, inviting gradient */
+.welcome-bg {
+    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 25%, #ff9a9e 50%, #fecfef 75%, #ffecd2 100%);
+    background-size: 400% 400%;
+    animation: stressGradient 22s ease infinite;
+}
+
+@keyframes stressGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Human stress overlay patterns */
+.stress-overlay::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(255, 219, 98, 0.2) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Subtle human silhouette patterns */
+.human-pattern::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.05) 35px, rgba(255,255,255,.05) 70px),
+        repeating-linear-gradient(-45deg, transparent, transparent 35px, rgba(255,255,255,.03) 35px, rgba(255,255,255,.03) 70px);
+    pointer-events: none;
+    z-index: -1;
+}

@@ -1,0 +1,380 @@
+/* Result Page - Blurred Landscape Background */
+
+body {
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background: 
+        /* Blurred landscape layers */
+        linear-gradient(135deg, 
+            rgba(135, 206, 235, 0.4) 0%, 
+            rgba(255, 255, 255, 0.3) 15%,
+            rgba(144, 238, 144, 0.3) 30%,
+            rgba(255, 218, 185, 0.4) 45%,
+            rgba(255, 165, 0, 0.3) 60%,
+            rgba(255, 99, 71, 0.3) 75%,
+            rgba(255, 255, 255, 0.2) 100%),
+        /* Mountain ranges */
+        radial-gradient(ellipse at 30% 70%, rgba(139, 69, 19, 0.3) 0%, transparent 40%),
+        radial-gradient(ellipse at 70% 80%, rgba(160, 82, 45, 0.3) 0%, transparent 45%),
+        radial-gradient(ellipse at 50% 75%, rgba(105, 105, 105, 0.2) 0%, transparent 50%),
+        /* Valley and fields */
+        linear-gradient(180deg, 
+            rgba(135, 206, 235, 0.4) 0%, 
+            rgba(255, 255, 255, 0.3) 25%,
+            rgba(144, 238, 144, 0.4) 50%,
+            rgba(255, 218, 185, 0.5) 75%,
+            rgba(255, 165, 0, 0.3) 100%);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    filter: blur(2px);
+    position: relative;
+    overflow-x: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Landscape overlay effects */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        /* Sky and clouds */
+        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 0.4) 0%, transparent 25%),
+        radial-gradient(circle at 75% 15%, rgba(255, 255, 255, 0.3) 0%, transparent 20%),
+        radial-gradient(circle at 50% 25%, rgba(255, 255, 255, 0.2) 0%, transparent 15%),
+        /* Landscape mist */
+        linear-gradient(180deg, 
+            transparent 0%, 
+            rgba(135, 206, 235, 0.1) 30%, 
+            rgba(255, 255, 255, 0.15) 60%,
+            rgba(144, 238, 144, 0.2) 100%);
+    z-index: -2;
+    animation: landscapeFlow 22s infinite ease-in-out;
+}
+
+@keyframes landscapeFlow {
+    0%, 100% { 
+        transform: translateY(0) scale(1); 
+        opacity: 0.9;
+    }
+    50% { 
+        transform: translateY(-5px) scale(1.01); 
+        opacity: 1;
+    }
+}
+
+/* Floating landscape elements */
+.landscape-particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.landscape-particles::before,
+.landscape-particles::after,
+.landscape-particles .particle1,
+.landscape-particles .particle2 {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: particleDrift 18s infinite linear;
+}
+
+.landscape-particles::before {
+    top: 10%;
+    left: 20%;
+    animation-delay: 0s;
+}
+
+.landscape-particles::after {
+    top: 30%;
+    right: 25%;
+    animation-delay: 4s;
+}
+
+.landscape-particles .particle1 {
+    bottom: 20%;
+    left: 30%;
+    animation-delay: 8s;
+}
+
+.landscape-particles .particle2 {
+    top: 50%;
+    right: 15%;
+    animation-delay: 12s;
+}
+
+@keyframes particleDrift {
+    0% { 
+        transform: translate(0, 0) scale(0); 
+        opacity: 0;
+    }
+    10% {
+        transform: translate(10px, -5px) scale(1); 
+        opacity: 0.6;
+    }
+    90% {
+        transform: translate(-5px, -10px) scale(1); 
+        opacity: 0.6;
+    }
+    100% { 
+        transform: translate(0, 0) scale(0); 
+        opacity: 0;
+    }
+}
+
+/* Sunset/sunrise effect */
+.sunset-glow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.sunset-glow::before,
+.sunset-glow::after {
+    content: '';
+    position: absolute;
+    background: radial-gradient(ellipse, rgba(255, 165, 0, 0.3) 0%, transparent 60%);
+    animation: sunsetPulse 15s infinite ease-in-out;
+}
+
+.sunset-glow::before {
+    top: 15%;
+    right: 25%;
+    width: 200px;
+    height: 100px;
+    animation-delay: 0s;
+}
+
+.sunset-glow::after {
+    top: 10%;
+    left: 20%;
+    width: 150px;
+    height: 80px;
+    animation-delay: 5s;
+}
+
+@keyframes sunsetPulse {
+    0%, 100% { 
+        transform: scale(1); 
+        opacity: 0.4;
+    }
+    50% { 
+        transform: scale(1.2); 
+        opacity: 0.7;
+    }
+}
+
+/* Landscape ambient light */
+.ambient-light {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.ambient-light::before,
+.ambient-light::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    animation: lightGlow 20s infinite ease-in-out;
+}
+
+.ambient-light::before {
+    top: 30%;
+    left: 15%;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
+    animation-delay: 0s;
+}
+
+.ambient-light::after {
+    bottom: 25%;
+    right: 20%;
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle, rgba(255, 218, 185, 0.2) 0%, transparent 50%);
+    animation-delay: 8s;
+}
+
+@keyframes lightGlow {
+    0%, 100% { 
+        transform: scale(1); 
+        opacity: 0.5;
+    }
+    50% { 
+        transform: scale(1.3); 
+        opacity: 0.8;
+    }
+}
+
+/* Result container styling */
+.container {
+    width: 420px;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    position: relative;
+    overflow: hidden;
+    margin: 0;
+}
+
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.1) 0%, 
+        rgba(255, 218, 185, 0.05) 100%);
+    pointer-events: none;
+}
+
+.container > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Result display styling */
+.result-display {
+    margin: 20px auto 10px;
+    padding: 25px;
+    width: fit-content;
+    border-radius: 15px;
+    border: 2px solid var(--result-color, #3498db);
+    background: rgba(255, 255, 255, 0.9);
+    text-align: center;
+}
+
+.percentage {
+    font-size: 55px;
+    font-weight: bold;
+    color: var(--result-color, #3498db);
+    line-height: 1;
+    margin: 10px 0;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 20px;
+    background: var(--result-color, #3498db);
+    color: white;
+    font-weight: 700;
+    font-size: 16px;
+    margin-top: 12px;
+}
+
+/* Analysis sections */
+.analysis-section {
+    margin: 25px 0;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 12px;
+    border-left: 4px solid var(--result-color, #3498db);
+}
+
+.analysis-section h3 {
+    margin-top: 0;
+    color: var(--result-color, #3498db);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding-bottom: 10px;
+}
+
+/* Suggestions styling */
+.suggestions {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 12px;
+    border-left: 4px solid var(--result-color, #3498db);
+    text-align: left;
+}
+
+.suggestion-item {
+    margin: 10px 0;
+    display: flex;
+    align-items: flex-start;
+}
+
+.suggestion-number {
+    color: var(--result-color, #3498db);
+    margin-right: 10px;
+    font-weight: bold;
+    min-width: 20px;
+}
+
+/* Button styling */
+.result-button {
+    display: inline-block;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.result-button button {
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.result-button button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    body {
+        filter: blur(1.5px);
+    }
+    
+    .container {
+        width: 90%;
+        margin: 10px;
+        padding: 20px;
+    }
+    
+    .percentage {
+        font-size: 45px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        filter: blur(1px);
+    }
+}

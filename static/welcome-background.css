@@ -1,0 +1,439 @@
+/* Welcome/Camera Page - Tech Scanning Theme */
+
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, 
+        #0f0c29 0%, 
+        #302b63 25%, 
+        #24243e 50%, 
+        #1f1c2c 75%, 
+        #0f0c29 100%);
+    background-size: 400% 400%;
+    animation: welcomeShift 15s ease infinite;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes welcomeShift {
+    0% { background-position: 0% 50%; }
+    25% { background-position: 50% 25%; }
+    50% { background-position: 100% 50%; }
+    75% { background-position: 50% 75%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Tech grid pattern */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: -2;
+    animation: gridPulse 10s infinite ease-in-out;
+}
+
+@keyframes gridPulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.6; }
+}
+
+/* Scanning lines */
+.scanning-lines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.scanning-lines::before,
+.scanning-lines::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(0, 255, 255, 0.6) 50%, 
+        transparent 100%);
+    animation: scanMove 4s infinite linear;
+}
+
+.scanning-lines::before {
+    top: 0;
+    animation-delay: 0s;
+}
+
+.scanning-lines::after {
+    top: 0;
+    animation-delay: 2s;
+}
+
+@keyframes scanMove {
+    0% { 
+        transform: translateY(0); 
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% { 
+        transform: translateY(100vh); 
+        opacity: 0;
+    }
+}
+
+/* Face detection overlay */
+.face-detection {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.face-detection::before,
+.face-detection::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid rgba(0, 255, 255, 0.4);
+    border-radius: 20px;
+    animation: faceDetect 3s infinite ease-in-out;
+}
+
+.face-detection::before {
+    width: 200px;
+    height: 250px;
+    animation-delay: 0s;
+}
+
+.face-detection::after {
+    width: 180px;
+    height: 230px;
+    animation-delay: 1.5s;
+}
+
+@keyframes faceDetect {
+    0%, 100% { 
+        transform: translate(-50%, -50%) scale(1); 
+        opacity: 0.3;
+    }
+    50% { 
+        transform: translate(-50%, -50%) scale(1.1); 
+        opacity: 0.7;
+    }
+}
+
+/* Corner brackets */
+.corner-brackets {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.corner-brackets::before,
+.corner-brackets::after,
+.corner-brackets .bracket1,
+.corner-brackets .bracket2 {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border: 2px solid rgba(0, 255, 255, 0.3);
+    animation: bracketPulse 5s infinite ease-in-out;
+}
+
+.corner-brackets::before {
+    top: 20px;
+    left: 20px;
+    border-right: none;
+    border-bottom: none;
+    animation-delay: 0s;
+}
+
+.corner-brackets::after {
+    top: 20px;
+    right: 20px;
+    border-left: none;
+    border-bottom: none;
+    animation-delay: 1s;
+}
+
+.corner-brackets .bracket1 {
+    bottom: 20px;
+    left: 20px;
+    border-right: none;
+    border-top: none;
+    animation-delay: 2s;
+}
+
+.corner-brackets .bracket2 {
+    bottom: 20px;
+    right: 20px;
+    border-left: none;
+    border-top: none;
+    animation-delay: 3s;
+}
+
+@keyframes bracketPulse {
+    0%, 100% { 
+        opacity: 0.3;
+        transform: scale(1);
+    }
+    50% { 
+        opacity: 0.7;
+        transform: scale(1.1);
+    }
+}
+
+/* Data points */
+.data-points {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.data-points::before,
+.data-points::after,
+.data-points .point1,
+.data-points .point2,
+.data-points .point3 {
+    content: '';
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(0, 255, 255, 0.8);
+    border-radius: 50%;
+    animation: dataPointFloat 8s infinite linear;
+}
+
+.data-points::before {
+    top: 15%;
+    left: 25%;
+    animation-delay: 0s;
+}
+
+.data-points::after {
+    top: 65%;
+    right: 30%;
+    animation-delay: 2s;
+}
+
+.data-points .point1 {
+    top: 35%;
+    right: 20%;
+    animation-delay: 4s;
+}
+
+.data-points .point2 {
+    bottom: 25%;
+    left: 35%;
+    animation-delay: 6s;
+}
+
+.data-points .point3 {
+    top: 45%;
+    left: 15%;
+    animation-delay: 1s;
+}
+
+@keyframes dataPointFloat {
+    0% { 
+        transform: translateY(0) scale(0); 
+        opacity: 0;
+    }
+    10% {
+        transform: translateY(-10px) scale(1); 
+        opacity: 1;
+    }
+    90% {
+        transform: translateY(-10px) scale(1); 
+        opacity: 1;
+    }
+    100% { 
+        transform: translateY(0) scale(0); 
+        opacity: 0;
+    }
+}
+
+/* Camera lens effect */
+.camera-lens {
+    position: fixed;
+    top: 10%;
+    right: 10%;
+    width: 100px;
+    height: 100px;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.camera-lens::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    border: 3px solid rgba(0, 255, 255, 0.4);
+    border-radius: 50%;
+    animation: lensRotate 10s infinite linear;
+}
+
+.camera-lens::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    border: 2px solid rgba(0, 255, 255, 0.3);
+    border-radius: 50%;
+    animation: lensRotate 8s infinite linear reverse;
+}
+
+@keyframes lensRotate {
+    0% { 
+        transform: translate(-50%, -50%) rotate(0deg); 
+        opacity: 0.4;
+    }
+    50% { 
+        transform: translate(-50%, -50%) rotate(180deg); 
+        opacity: 0.8;
+    }
+    100% { 
+        transform: translate(-50%, -50%) rotate(360deg); 
+        opacity: 0.4;
+    }
+}
+
+/* Welcome container styling */
+.glass-container {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+    max-width: 90%;
+}
+
+.glass-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+        rgba(0, 255, 255, 0.05) 0%, 
+        rgba(255, 255, 255, 0.05) 100%);
+    pointer-events: none;
+}
+
+.glass-container > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Video styling */
+video {
+    width: 80%;
+    max-width: 600px;
+    height: auto;
+    border: 2px solid rgba(0, 255, 255, 0.5);
+    border-radius: 10px;
+    margin-top: 20px;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+}
+
+/* Status styling */
+#cameraStatus {
+    margin-top: 10px;
+    font-size: 18px;
+    color: #00ffff;
+    font-weight: 500;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+/* Button styling */
+#nextButton {
+    background: linear-gradient(135deg, #00ffff, #00cccc);
+    color: #0f0c29;
+    font-weight: bold;
+    padding: 12px 30px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3);
+}
+
+#nextButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 255, 255, 0.5);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    body {
+        background-size: 300% 300%;
+        animation-duration: 10s;
+    }
+    
+    .glass-container {
+        padding: 20px;
+        margin: 10px;
+    }
+    
+    .camera-lens {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .camera-lens::before {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .camera-lens::after {
+        width: 35px;
+        height: 35px;
+    }
+}

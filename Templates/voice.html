@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Voice Recording</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/voice-wavy.css">
+    <style>
+        body{
+            margin:0;
+            height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            font-family:'Poppins', sans-serif;
+        }
+
+        @keyframes gradientShift{
+            0%{background-position:0% 50%;}
+            50%{background-position:100% 50%;}
+            100%{background-position:0% 50%;}
+        }
+
+        .container{
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding:50px;
+            border-radius:20px;
+            text-align:center;
+            box-shadow:0px 8px 32px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+            pointer-events: none;
+        }
+
+        h1{
+            font-size:36px;
+            color: darkblue;
+            font-weight:bold;
+            margin-bottom:20px;
+        }
+
+        #status{
+            margin-top:20px;
+            font-size:20px;
+            color:green;
+        }
+
+        button{
+            margin-top:20px;
+            padding:14px 40px;
+            font-size:18px;
+            border:none;
+            border-radius:8px;
+            cursor:pointer;
+        }
+
+        #recordBtn{
+            background-color:#2196F3;
+            color:white;
+        }
+        #recordBtn:hover{
+            background-color:#0b7dda;
+        }
+
+        #nextButton{
+            display:none;
+            background-color:green;
+            color:white;
+        }
+        #nextButton:hover{
+            background-color:darkgreen;
+        }
+    </style>
+</head>
+<body>
+<div class="audio-particles"></div>
+<div class="sound-waves"></div>
+    <div class="container">
+        <h1>Voice Recording</h1>
+        <p id="status">Press "Start Recording" to capture your voice.</p>
+
+        <button id="recordBtn">Start Recording</button>
+        <button id="analyzeBtn" style="display:none; background:#ff9800; color:white;">Analyze Voice</button>
+        <button id="nextButton" onclick="goNext()">Next</button>
+
+        <div id="voiceOptions" style="display:none; text-align:left; margin-top:25px;">
+            <p>Analyzing your voice automatically...</p>
+        </div>
+    </div>
+
+    <script>
+        const status = document.getElementById("status");
+        const recordBtn = document.getElementById("recordBtn");
+        const analyzeBtn = document.getElementById("analyzeBtn");
+        const nextBtn = document.getElementById("nextButton");
+        const voiceOptions = document.getElementById("voiceOptions");
+
+        let mediaRecorder;
+        let audioChunks = [];
+        let recordingTimeout;
+        let recordedAudioBlob = null;
+
+        recordBtn.addEventListener("click", async () => {
+            if (recordBtn.innerText === "Start Recording") {
+                recordBtn.innerText = "Stop Recording";
+                status.innerText = "Requesting microphone access...";
+
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    audioChunks = [];
+                    const options = {};
+                    if (MediaRecorder.isTypeSupported('audio/wav')) {
+                        options.mimeType = 'audio/wav';
+                    } else if (MediaRecorder.isTypeSupported('audio/webm')) {
+                        options.mimeType = 'audio/webm';
+                    }
+                    mediaRecorder = new MediaRecorder(stream, options);
+                    mediaRecorder.start();
+                    status.innerText = "Recording in progress...";
+
+                    mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+
+                    mediaRecorder.onstop = () => {
+                        stream.getTracks().forEach(track => track.stop());
+                        recordedAudioBlob = new Blob(audioChunks, { type: mediaRecorder.mimeType || 'audio/wav' });
+                        status.innerText = "Recording complete. Click Analyze to process your voice.";
+                        voiceOptions.style.display = "block";
+                        analyzeBtn.style.display = "inline-block";
+                        recordBtn.style.display = "none";
+                    };
+
+                    recordingTimeout = setTimeout(() => {
+                        if (mediaRecorder.state !== "inactive") mediaRecorder.stop();
+                    }, 10000);
+                } catch (err) {
+                    status.innerText = "Microphone access denied or error: " + err;
+                    recordBtn.innerText = "Start Recording";
+                }
+            }
+        });
+
+        analyzeBtn.addEventListener("click", async () => {
+            status.innerText = "Analyzing voice...";
+            voiceOptions.innerHTML = '<p>Analyzing your voice automatically. Please wait...</p>';
+            analyzeBtn.disabled = true;
+
+            const formData = new FormData();
+            formData.append('audio', recordedAudioBlob, 'recording.wav');
+
+            const minDelay = new Promise(resolve => setTimeout(resolve, 3000));
+            try {
+                const responsePromise = fetch('/analyze_voice', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const [response] = await Promise.all([responsePromise, minDelay]);
+                if (!response.ok) {
+                    throw new Error('Server error');
+                }
+
+                status.innerText = "Voice analysis complete. Click Next to continue.";
+                nextBtn.style.display = "inline-block";
+                analyzeBtn.style.display = "none";
+                voiceOptions.innerHTML = '<p>Analysis finished. Proceed to the next step.</p>';
+            } catch (err) {
+                console.error('Voice analysis failed', err);
+                status.innerText = "Voice analysis failed. Try again.";
+                analyzeBtn.disabled = false;
+                voiceOptions.innerHTML = '<p>Analysis failed. Please retry.</p>';
+            }
+        });
+
+        function goNext() {
+            window.location.href = "/questions";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome {{username}}</title>
+    <link rel="stylesheet" href="/static/camera-wavy.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .glass-container {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0px 8px 32px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+            max-width: 90%;
+        }
+        
+        .glass-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+            pointer-events: none;
+        }
+        h1 {
+            font-size: 40px;   
+            color: darkblue;   
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        #cameraStatus {
+            margin-top: 10px;
+            font-size: 20px;
+            color: green;
+        }
+        video {
+            width: 80%;       /* Make camera feed big */
+            max-width: 600px;
+            height: auto;
+            border: 2px solid darkblue;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        #nextButton {
+            display: none;        /* Initially hidden */
+            margin-top: 30px;
+            padding: 12px 30px;
+            font-size: 18px;
+            background-color: green;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        #nextButton:hover {
+            background-color: darkgreen;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body>
+<div class="tech-particles"></div>
+<div class="scan-lines"></div>
+
+    <div class="container">
+        <h1>Welcome {{ username }}!</h1>
+        <p id="cameraStatus">Please allow camera access...</p>
+
+        <video id="video" autoplay></video>
+        <br>
+        <button id="nextButton" onclick="goNext()">Next</button>
+    </div>
+
+    <script>
+        let capturedImage = null;
+        const video = document.getElementById("video");
+        const cameraStatus = document.getElementById("cameraStatus");
+
+        async function initCamera() {
+            try {
+                cameraStatus.innerText = "Initializing camera...";
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                video.srcObject = stream;
+
+                cameraStatus.innerText = "Camera ready. Please keep your face visible.";
+
+                setTimeout(async () => {
+                    cameraStatus.innerText = "Capturing image...";
+                    const canvas = document.createElement("canvas");
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    const ctx = canvas.getContext("2d");
+                    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                    capturedImage = canvas.toDataURL("image/png");
+
+                    cameraStatus.innerText = "Analyzing facial expression...";
+
+                    try {
+                        const response = await fetch('/analyze_camera', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ image: capturedImage })
+                        });
+                        const result = await response.json();
+                        if (response.ok) {
+                            cameraStatus.innerText = result.message;
+                        } else {
+                            cameraStatus.innerText = "Analysis failed: " + (result.error || "Unknown error");
+                        }
+                    } catch (err) {
+                        console.error('Camera analysis failed', err);
+                        cameraStatus.innerText = "Image captured, but analysis failed.";
+                    }
+
+                    stream.getTracks().forEach(track => track.stop());
+                    video.style.display = "none";
+                    document.getElementById("nextButton").style.display = "inline-block";
+                }, 3000);  // Increased to 3 seconds for better capture
+            } catch (err) {
+                cameraStatus.innerText = "Camera access denied: " + err.message;
+            }
+        }
+
+        initCamera();
+
+        function goNext() {
+            if (capturedImage) {
+                window.location.href = "/voice";
+            } else {
+                alert("No image captured!");
+            }
+        }
+    </script>
+
+</body>
+</html>

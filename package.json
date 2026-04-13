@@ -1,0 +1,13 @@
+{
+    "name": "AuraSense",
+    "version": "1.0.0",
+    "description": "Stress and emotional wellness assessment application",
+    "main": "app.py",
+    "scripts": {
+        "start": "python app.py",
+        "dev": "python app.py"
+    },
+    "keywords": ["flask", "emotion-detection", "voice-analysis", "stress-assessment"],
+    "author": "",
+    "license": "MIT"
+}

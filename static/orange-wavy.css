@@ -1,0 +1,321 @@
+/* Orange Wavy Background for Stress Questionnaire */
+
+body {
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background: 
+        /* Orange gradient base */
+        linear-gradient(135deg, 
+            #ff6b35 0%, 
+            #ff8c42 20%, 
+            #ffa947 40%, 
+            #ffc947 60%, 
+            #ffda79 80%, 
+            #fff3b0 100%);
+    background-size: 400% 400%;
+    animation: orangeShift 12s ease infinite;
+    position: relative;
+    overflow-x: hidden;
+}
+
+@keyframes orangeShift {
+    0% { background-position: 0% 50%; }
+    25% { background-position: 50% 25%; }
+    50% { background-position: 100% 50%; }
+    75% { background-position: 50% 75%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Wavy pattern overlay */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        /* Horizontal waves */
+        radial-gradient(ellipse at 20% 50%, rgba(255, 255, 255, 0.3) 0%, transparent 50%),
+        radial-gradient(ellipse at 60% 30%, rgba(255, 255, 255, 0.2) 0%, transparent 40%),
+        radial-gradient(ellipse at 80% 70%, rgba(255, 255, 255, 0.25) 0%, transparent 45%),
+        /* Diagonal waves */
+        linear-gradient(45deg, 
+            transparent 0%, 
+            rgba(255, 255, 255, 0.1) 25%, 
+            transparent 50%, 
+            rgba(255, 255, 255, 0.1) 75%, 
+            transparent 100%),
+        linear-gradient(-45deg, 
+            transparent 0%, 
+            rgba(255, 255, 255, 0.08) 30%, 
+            transparent 60%, 
+            rgba(255, 255, 255, 0.08) 90%, 
+            transparent 100%);
+    z-index: -2;
+    animation: waveFlow 15s infinite ease-in-out;
+}
+
+@keyframes waveFlow {
+    0%, 100% { 
+        transform: translateY(0) scale(1); 
+        opacity: 0.8;
+    }
+    50% { 
+        transform: translateY(-10px) scale(1.02); 
+        opacity: 1;
+    }
+}
+
+/* Floating orange particles */
+.orange-particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.orange-particles::before,
+.orange-particles::after,
+.orange-particles .particle1,
+.orange-particles .particle2,
+.orange-particles .particle3 {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: radial-gradient(circle, rgba(255, 107, 53, 0.8) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: particleFloat 10s infinite linear;
+}
+
+.orange-particles::before {
+    top: 10%;
+    left: 20%;
+    animation-delay: 0s;
+}
+
+.orange-particles::after {
+    top: 30%;
+    right: 25%;
+    animation-delay: 2s;
+}
+
+.orange-particles .particle1 {
+    top: 60%;
+    left: 30%;
+    animation-delay: 4s;
+}
+
+.orange-particles .particle2 {
+    top: 40%;
+    right: 20%;
+    animation-delay: 6s;
+}
+
+.orange-particles .particle3 {
+    bottom: 20%;
+    left: 50%;
+    animation-delay: 8s;
+}
+
+@keyframes particleFloat {
+    0% { 
+        transform: translateY(0) scale(0); 
+        opacity: 0;
+    }
+    10% {
+        transform: translateY(-15px) scale(1); 
+        opacity: 0.8;
+    }
+    90% {
+        transform: translateY(-15px) scale(1); 
+        opacity: 0.8;
+    }
+    100% { 
+        transform: translateY(0) scale(0); 
+        opacity: 0;
+    }
+}
+
+/* Wave lines */
+.wave-lines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.wave-lines::before,
+.wave-lines::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.4) 50%, 
+        transparent 100%);
+    animation: waveMove 8s infinite linear;
+}
+
+.wave-lines::before {
+    top: 25%;
+    animation-delay: 0s;
+}
+
+.wave-lines::after {
+    top: 55%;
+    animation-delay: 3s;
+}
+
+@keyframes waveMove {
+    0% { 
+        transform: translateX(-100%); 
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.6;
+    }
+    90% {
+        opacity: 0.6;
+    }
+    100% { 
+        transform: translateX(100%); 
+        opacity: 0;
+    }
+}
+
+/* Questions container styling */
+.container {
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 30px;
+    width: 700px;
+    border-radius: 20px;
+    box-shadow: 0px 20px 40px rgba(255, 107, 53, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    position: relative;
+    overflow: hidden;
+    margin: 20px auto;
+}
+
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.1) 0%, 
+        rgba(255, 200, 87, 0.05) 100%);
+    pointer-events: none;
+}
+
+.container > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Question styling */
+.question {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 107, 53, 0.2);
+    margin-top: 15px;
+    transition: all 0.3s ease;
+}
+
+.question:hover {
+    background: rgba(255, 255, 255, 0.95);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 107, 53, 0.1);
+    border-color: rgba(255, 107, 53, 0.3);
+}
+
+/* Radio button styling */
+input[type="radio"] {
+    margin-right: 10px;
+    accent-color: #ff6b35;
+}
+
+label {
+    display: block;
+    margin: 8px 0;
+    padding: 8px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    color: #333;
+}
+
+label:hover {
+    background-color: rgba(255, 200, 87, 0.2);
+}
+
+/* Button styling */
+button {
+    margin-top: 20px;
+    padding: 15px 30px;
+    width: 100%;
+    background: linear-gradient(135deg, #ff6b35, #ff8c42);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(255, 107, 53, 0.3);
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+    background: linear-gradient(135deg, #ff8c42, #ff6b35);
+}
+
+/* Text styling */
+h2 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #333;
+    text-shadow: 0px 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.required {
+    color: #ff6b35;
+    font-weight: bold;
+}
+
+.note {
+    color: #ff6b35;
+    margin-top: 10px;
+    display: none;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px;
+    border-radius: 5px;
+    border-left: 4px solid #ff6b35;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+        padding: 20px;
+        margin: 10px;
+    }
+}

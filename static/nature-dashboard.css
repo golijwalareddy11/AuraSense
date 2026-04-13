@@ -1,0 +1,280 @@
+/* Dashboard Page - Blurred Nature Background */
+
+body {
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background: 
+        /* Blurred nature layers */
+        linear-gradient(135deg, 
+            rgba(34, 139, 34, 0.4) 0%, 
+            rgba(144, 238, 144, 0.3) 25%,
+            rgba(255, 255, 255, 0.2) 50%,
+            rgba(135, 206, 235, 0.3) 75%,
+            rgba(255, 218, 185, 0.4) 100%),
+        /* Rolling hills */
+        radial-gradient(ellipse at 20% 80%, rgba(34, 139, 34, 0.3) 0%, transparent 40%),
+        radial-gradient(ellipse at 60% 90%, rgba(46, 125, 50, 0.3) 0%, transparent 45%),
+        radial-gradient(ellipse at 80% 70%, rgba(76, 175, 80, 0.2) 0%, transparent 35%),
+        /* Sky and clouds */
+        linear-gradient(180deg, 
+            rgba(135, 206, 235, 0.5) 0%, 
+            rgba(255, 255, 255, 0.3) 30%,
+            rgba(144, 238, 144, 0.4) 60%,
+            rgba(34, 139, 34, 0.3) 100%);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    filter: blur(2px);
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Nature overlay effects */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        /* Soft clouds */
+        radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.4) 0%, transparent 25%),
+        radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.3) 0%, transparent 20%),
+        radial-gradient(circle at 50% 15%, rgba(255, 255, 255, 0.2) 0%, transparent 15%),
+        /* Nature mist */
+        linear-gradient(180deg, 
+            transparent 0%, 
+            rgba(144, 238, 144, 0.1) 40%, 
+            rgba(34, 139, 34, 0.15) 100%);
+    z-index: -2;
+    animation: natureBreathe 18s infinite ease-in-out;
+}
+
+@keyframes natureBreathe {
+    0%, 100% { 
+        transform: translateY(0) scale(1); 
+        opacity: 0.9;
+    }
+    50% { 
+        transform: translateY(-5px) scale(1.01); 
+        opacity: 1;
+    }
+}
+
+/* Floating leaves and nature elements */
+.nature-particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.nature-particles::before,
+.nature-particles::after,
+.nature-particles .leaf1,
+.nature-particles .leaf2 {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(ellipse, rgba(34, 139, 34, 0.3) 0%, transparent 70%);
+    border-radius: 50% 0 50% 0;
+    animation: leafFall 12s infinite linear;
+}
+
+.nature-particles::before {
+    top: -20px;
+    left: 20%;
+    animation-delay: 0s;
+}
+
+.nature-particles::after {
+    top: -20px;
+    right: 30%;
+    animation-delay: 3s;
+}
+
+.nature-particles .leaf1 {
+    top: -20px;
+    left: 50%;
+    animation-delay: 6s;
+}
+
+.nature-particles .leaf2 {
+    top: -20px;
+    right: 10%;
+    animation-delay: 9s;
+}
+
+@keyframes leafFall {
+    0% { 
+        transform: translateY(0) rotate(0deg); 
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.6;
+    }
+    90% {
+        opacity: 0.6;
+    }
+    100% { 
+        transform: translateY(100vh) rotate(360deg); 
+        opacity: 0;
+    }
+}
+
+/* Sunlight filtering through trees */
+.sunlight-filter {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.sunlight-filter::before,
+.sunlight-filter::after {
+    content: '';
+    position: absolute;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 223, 0, 0.2) 50%, 
+        transparent 100%);
+    animation: sunlightMove 15s infinite linear;
+}
+
+.sunlight-filter::before {
+    top: 10%;
+    left: -100px;
+    width: 200px;
+    height: 80px;
+    animation-delay: 0s;
+}
+
+.sunlight-filter::after {
+    top: 25%;
+    left: -100px;
+    width: 150px;
+    height: 60px;
+    animation-delay: 5s;
+}
+
+@keyframes sunlightMove {
+    0% { 
+        transform: translateX(0); 
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.4;
+    }
+    90% {
+        opacity: 0.4;
+    }
+    100% { 
+        transform: translateX(calc(100vw + 200px)); 
+        opacity: 0;
+    }
+}
+
+/* Dashboard container styling */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    position: relative;
+    overflow: hidden;
+}
+
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.1) 0%, 
+        rgba(144, 238, 144, 0.05) 100%);
+    pointer-events: none;
+}
+
+.container > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Stat cards with nature theme */
+.stat {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(34, 139, 34, 0.1);
+}
+
+.stat:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+/* Stress level colors with nature theme */
+.normal { 
+    background: linear-gradient(135deg, #90EE90, #98FB98); 
+    color: #2E7D32;
+}
+.moderate { 
+    background: linear-gradient(135deg, #FFD700, #FFA500); 
+    color: #8B4513;
+}
+.high { 
+    background: linear-gradient(135deg, #FF6347, #FF4500); 
+    color: #8B0000;
+}
+
+/* History items */
+.history-item {
+    background: rgba(255, 255, 255, 0.8);
+    border-left: 4px solid #228B22;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(34, 139, 34, 0.1);
+}
+
+.history-item:hover {
+    background: rgba(255, 255, 255, 0.95);
+    transform: translateX(5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    body {
+        filter: blur(1.5px);
+    }
+    
+    .container {
+        margin: 10px;
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        filter: blur(1px);
+    }
+}

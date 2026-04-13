@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Stress Questionnaire</title>
+<link rel="stylesheet" href="/static/orange-wavy.css">
+
+<style>
+body{
+font-family: Arial, sans-serif;
+margin: 0;
+padding: 20px;
+min-height: 100vh;
+}
+
+.container{
+background: rgba(255, 255, 255, 0.85);
+backdrop-filter: blur(15px);
+-webkit-backdrop-filter: blur(15px);
+padding:30px;
+width:700px;
+border-radius:20px;
+box-shadow:0px 8px 32px rgba(0,0,0,0.3);
+border: 1px solid rgba(255, 255, 255, 0.3);
+position: relative;
+overflow: hidden;
+margin: 20px auto;
+}
+
+.container::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+pointer-events: none;
+}
+
+h2{
+text-align:center;
+font-size: 28px;
+margin-bottom: 20px;
+color: #1a1a1a;
+text-shadow: 0px 1px 2px rgba(255,255,255,0.8);
+}
+
+.question{
+margin-top:15px;
+background: rgba(255, 255, 255, 0.6);
+backdrop-filter: blur(5px);
+padding: 15px;
+border-radius: 10px;
+border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.required{
+color:#d32f2f;
+font-weight: bold;
+}
+
+.note{
+color:#d32f2f;
+margin-top:10px;
+display:none;
+background: rgba(255, 255, 255, 0.8);
+padding: 10px;
+border-radius: 5px;
+border-left: 4px solid #d32f2f;
+}
+
+button{
+margin-top:20px;
+padding:12px;
+width:100%;
+background: linear-gradient(135deg, #ff8c00, #ff6b00);
+color:white;
+border:none;
+font-size:16px;
+cursor:pointer;
+border-radius:8px;
+font-weight: 600;
+transition: all 0.3s ease;
+box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3);
+}
+
+button:hover{
+background: linear-gradient(135deg, #ff6b00, #ff5500);
+transform: translateY(-2px);
+box-shadow: 0 6px 20px rgba(255, 140, 0, 0.4);
+}
+
+@keyframes gradientShift{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+</style>
+
+<script>
+
+function validateForm(){
+
+let questions = document.querySelectorAll(".question");
+let answered = true;
+
+questions.forEach((q)=>{
+if(!q.querySelector("input[type='radio']:checked")){
+answered=false;
+}
+});
+
+if(!answered){
+document.getElementById("note").style.display="block";
+return false;
+}
+
+calculateScore();
+return true;
+}
+
+function calculateScore(){
+
+let score=0;
+
+score += parseInt(document.querySelector('input[name="q1"]:checked').value);
+score += parseInt(document.querySelector('input[name="q2"]:checked').value);
+score += parseInt(document.querySelector('input[name="q3"]:checked').value);
+score += parseInt(document.querySelector('input[name="q4"]:checked').value);
+score += parseInt(document.querySelector('input[name="q5"]:checked').value);
+score += parseInt(document.querySelector('input[name="q6"]:checked').value);
+
+document.getElementById("score").value = score;
+
+}
+
+</script>
+
+</head>
+
+<body>
+<div class="orange-particles"></div>
+<div class="wave-lines"></div>
+
+<div class="container">
+
+<h2>Stress Questionnaire</h2>
+
+<form action="/questions" method="POST" onsubmit="return validateForm()">
+
+<input type="hidden" id="score" name="score">
+
+<div class="question">
+<p>1. How often do you feel anxious or worried? <span class="required">*</span></p>
+<label><input type="radio" name="q1" value="1"> Almost never</label><br>
+<label><input type="radio" name="q1" value="2"> Occasionally</label><br>
+<label><input type="radio" name="q1" value="3"> Frequently</label><br>
+<label><input type="radio" name="q1" value="4"> Almost all the time</label>
+</div>
+
+<div class="question">
+<p>2. Do you experience physical symptoms of stress, such as headaches or muscle tension? <span class="required">*</span></p>
+<label><input type="radio" name="q2" value="1"> No physical symptoms</label><br>
+<label><input type="radio" name="q2" value="2"> Occasionally mild</label><br>
+<label><input type="radio" name="q2" value="3"> Frequently uncomfortable</label><br>
+<label><input type="radio" name="q2" value="4"> Often debilitating</label>
+</div>
+
+<div class="question">
+<p>3. How would you rate your quality of sleep? <span class="required">*</span></p>
+<label><input type="radio" name="q3" value="4"> Excellent</label><br>
+<label><input type="radio" name="q3" value="3"> Good</label><br>
+<label><input type="radio" name="q3" value="2"> Fair</label><br>
+<label><input type="radio" name="q3" value="1"> Poor</label>
+</div>
+
+<div class="question">
+<p>4. How often do you feel overwhelmed with tasks or responsibilities? <span class="required">*</span></p>
+<label><input type="radio" name="q4" value="1"> Almost never</label><br>
+<label><input type="radio" name="q4" value="2"> Occasionally</label><br>
+<label><input type="radio" name="q4" value="3"> Frequently</label><br>
+<label><input type="radio" name="q4" value="4"> Almost all the time</label>
+</div>
+
+<div class="question">
+<p>5. How often do you feel irritable or moody? <span class="required">*</span></p>
+<label><input type="radio" name="q5" value="1"> Almost never</label><br>
+<label><input type="radio" name="q5" value="2"> Occasionally</label><br>
+<label><input type="radio" name="q5" value="3"> Frequently</label><br>
+<label><input type="radio" name="q5" value="4"> Almost all the time</label>
+</div>
+
+<div class="question">
+<p>6. Do you engage in stress-reducing activities such as exercise or meditation? <span class="required">*</span></p>
+<label><input type="radio" name="q6" value="4"> Frequently</label><br>
+<label><input type="radio" name="q6" value="3"> Occasionally</label><br>
+<label><input type="radio" name="q6" value="2"> Rarely</label><br>
+<label><input type="radio" name="q6" value="1"> Never</label>
+</div>
+
+<p id="note" class="note">Please answer all the questions before proceeding.</p>
+
+<button type="submit">Next</button>
+
+</form>
+
+</div>
+
+</body>
+</html>

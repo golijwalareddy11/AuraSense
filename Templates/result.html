@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Stress Result</title>
+<link rel="stylesheet" href="/static/result-wavy.css">
+</head>
+
+<body style="font-family:Arial; text-align:center; margin:0; padding:20px; min-height:100vh; display:flex; align-items:center; justify-content:center;">
+<div class="analysis-particles"></div>
+<div class="analysis-flow"></div>
+
+<div class="container">
+<div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%); pointer-events: none;"></div>
+
+<h1 style="margin-top:40px;">AuraSense - Stress Analysis</h1>
+
+<h2>Stress Result</h2>
+
+<div style="margin:20px auto 10px; padding:18px; width:fit-content; border-radius:14px; border:2px solid {{color}}; background: rgba(0,0,0,0.02);">
+    <div style="font-size:18px; color:#333; margin-bottom:8px;">Your current stress percentage is:</div>
+    <div style="font-size:55px; font-weight:bold; color:{{color}}; line-height:1;">{{percentage}}%</div>
+    <div style="margin-top:12px; display:flex; justify-content:center; gap:10px; align-items:center;">
+        <span style="padding:8px 16px; border-radius:999px; background: {{color}}22; color: {{color}}; font-weight:700; font-size:16px;">{{status}}</span>
+    </div>
+</div>
+
+<hr style="margin:25px;">
+
+<h3>Camera Analysis</h3>
+{% if camera_reason %}
+<p>{{camera_reason}}</p>
+{% else %}
+<p>No camera analysis was recorded.</p>
+{% endif %}
+
+<hr style="margin:25px;">
+
+<h3>Voice Analysis</h3>
+
+{% for reason in voice_reason %}
+<p>{{reason}}</p>
+{% endfor %}
+
+<hr style="margin:25px;">
+
+<h3>Personalized Suggestions</h3>
+<div style="text-align: left; background: #f8f9fa; padding: 15px; border-radius: 8px; border-left: 4px solid {{color}};">
+{% for suggestion in suggestions %}
+<p style="margin: 8px 0; display: flex; align-items: flex-start;">
+<span style="color: {{color}}; margin-right: 10px; font-weight: bold;">{{ loop.index }}.</span>
+<span>{{ suggestion }}</span>
+</p>
+{% endfor %}
+</div>
+
+<p style="font-size:14px; color:gray; margin-top: 20px;">
+This result is generated based on facial emotion, voice tone and questionnaire responses.
+</p>
+
+<a href="/dashboard" style="display:block; text-align:center; margin-top:20px;">
+<button style="padding:12px 24px; background:#007bff; color:white; border:none; border-radius:6px; font-size:16px; cursor:pointer;">View Dashboard</button>
+</a>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dashboard - {{username}}</title>
+<link rel="stylesheet" href="/static/dashboard-wavy.css">
+<style>
+body { font-family: Arial, sans-serif; margin: 0; padding: 20px; min-height: 100vh; }
+.container { max-width: 800px; margin: 0 auto; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); padding: 30px; border-radius: 20px; box-shadow: 0px 8px 32px rgba(0,0,0,0.3); border: 1px solid rgba(255, 255, 255, 0.3); position: relative; overflow: hidden; }
+
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+    pointer-events: none;
+}
+
+.container > * {
+    position: relative;
+    z-index: 1;
+}
+h1 { text-align: center; color: #333; }
+.stats { display: flex; justify-content: space-around; margin: 20px 0; }
+.stat { text-align: center; padding: 20px; border-radius: 8px; }
+.normal { background: #d4edda; color: #155724; }
+.moderate { background: #fff3cd; color: #856404; }
+.high { background: #f8d7da; color: #721c24; }
+.details { margin-top: 30px; }
+.section { margin-bottom: 20px; }
+.section h3 { border-bottom: 2px solid #007bff; padding-bottom: 5px; }
+.logout { text-align: center; margin-top: 30px; }
+.logout a { padding: 10px 20px; background: #dc3545; color: white; text-decoration: none; border-radius: 5px; }
+.history-item { border: 1px solid rgba(255, 255, 255, 0.3); padding: 15px; margin: 10px 0; border-radius: 8px; background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(5px); }
+.subsection { margin-bottom: 15px; }
+.subsection h4 { color: #007bff; margin-bottom: 5px; }
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+</style>
+</head>
+<body>
+<div class="data-particles"></div>
+<div class="data-flow"></div>
+<div class="container">
+<h1>Welcome to your Dashboard, {{username}}!</h1>
+
+<div class="stats">
+<div class="stat {{ 'normal' if percentage < 30 else 'moderate' if percentage < 70 else 'high' }}">
+<h2>{{percentage}}%</h2>
+<p>Stress Level</p>
+<p>{{status}}</p>
+</div>
+<div class="stat">
+<h3>Scores Breakdown</h3>
+<p>Questionnaire: {{questionnaire_score}}</p>
+<p>Camera: {{camera_score}}</p>
+<p>Voice: {{voice_score}}</p>
+</div>
+</div>
+
+<div class="details">
+<div class="section">
+<h3>Current Test Analysis</h3>
+<div class="subsection">
+<h4>Camera Analysis</h4>
+{% if camera_reason %}
+<p>{{camera_reason}}</p>
+{% else %}
+<p>No camera analysis recorded.</p>
+{% endif %}
+</div>
+
+<div class="subsection">
+<h4>Voice Analysis</h4>
+{% for reason in voice_reason %}
+<p>{{reason}}</p>
+{% endfor %}
+</div>
+</div>
+
+<div class="section">
+<h3>Test History</h3>
+{% if user_tests %}
+<p><strong>You have taken {{user_tests|length}} test(s)</strong></p>
+{% for test in user_tests %}
+<div class="history-item">
+<p><strong>{{test.timestamp}}</strong></p>
+<p>Stress Level: {{test.percentage}}% - {{test.status}}</p>
+<p>Questionnaire: {{test.questionnaire_score}} | Camera: {{test.camera_score}} | Voice: {{test.voice_score}}</p>
+{% if test.camera_reason %}
+<p><em>Camera: {{test.camera_reason}}</em></p>
+{% endif %}
+{% if test.voice_reason %}
+<p><em>Voice:</em></p>
+{% for reason in test.voice_reason %}
+<p style="margin-left: 20px; font-size: 0.9em;">- {{reason}}</p>
+{% endfor %}
+{% endif %}
+</div>
+{% endfor %}
+{% else %}
+<p>No previous test records found.</p>
+{% endif %}
+</div>
+</div>
+
+<div class="logout">
+<a href="/logout" style="padding: 10px 20px; background: #dc3545; color: white; text-decoration: none; border-radius: 5px;">Logout & Start New Assessment</a>
+</div>
+</div>
+</body>
+</html>

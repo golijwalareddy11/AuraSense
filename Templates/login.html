@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>AuraSense</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/original-login.css">
+
+<style>
+
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:'Poppins', sans-serif;
+}
+
+.container{
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    padding:50px;
+    width:450px;
+    border-radius:20px;
+    box-shadow:0px 8px 32px rgba(0,0,0,0.3);
+    text-align:center;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+    pointer-events: none;
+}
+
+h1{
+    margin-bottom:10px;
+    font-size:32px;
+    font-weight:600;
+}
+
+h3{
+    margin-top:0;
+    color:gray;
+}
+
+input{
+    width:100%;
+    padding:14px;
+    margin:12px 0;
+    border-radius:8px;
+    border:1px solid #ccc;
+    font-size:16px;
+}
+
+.password-box{
+    position:relative;
+}
+
+.password-box input{
+    width:100%;
+}
+
+.eye{
+    position:absolute;
+    right:15px;
+    top:50%;
+    transform:translateY(-50%);
+    cursor:pointer;
+    font-size:18px;
+}
+
+button{
+    width:100%;
+    padding:14px;
+    margin-top:10px;
+    background:#4CAF50;
+    color:white;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#43a047;
+}
+
+</style>
+</head>
+
+<body>
+<div class="rainbow-particles"></div>
+<div class="rainbow-waves"></div>
+
+<div class="container">
+
+<h1>AuraSense</h1>
+<h3>Mental Health Detection System</h3>
+
+{% if error %}
+<p style="color:red; font-weight:bold;">{{error}}</p>
+{% endif %}
+
+<form action="/login" method="post">
+
+<input type="text" name="username" placeholder="Enter Username" required>
+
+<div class="password-box">
+<input type="password" id="password" name="password" placeholder="Enter Password" required>
+<span class="eye" onclick="togglePassword()">👁</span>
+</div>
+
+<button type="submit">Login</button>
+
+</form>
+
+</div>
+
+<script>
+function togglePassword(){
+    var x = document.getElementById("password");
+
+    if(x.type === "password"){
+        x.type = "text";
+    } else {
+        x.type = "password";
+    }
+}
+</script>
+
+</body>
+</html>

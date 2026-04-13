@@ -1,0 +1,416 @@
+/* Voice Recording Page - Blurred Waterfall Background */
+
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    font-family: 'Poppins', Arial, sans-serif;
+    background: 
+        /* Blurred waterfall layers */
+        linear-gradient(135deg, 
+            rgba(135, 206, 235, 0.5) 0%, 
+            rgba(173, 216, 230, 0.4) 20%,
+            rgba(255, 255, 255, 0.3) 40%,
+            rgba(176, 224, 230, 0.4) 60%,
+            rgba(175, 238, 238, 0.5) 80%,
+            rgba(64, 224, 208, 0.4) 100%),
+        /* Waterfall streams */
+        linear-gradient(90deg, 
+            transparent 0%, 
+            rgba(135, 206, 235, 0.3) 20%, 
+            rgba(173, 216, 230, 0.4) 40%, 
+            rgba(255, 255, 255, 0.3) 60%, 
+            rgba(176, 224, 230, 0.4) 80%, 
+            transparent 100%),
+        /* Water mist */
+        radial-gradient(ellipse at 50% 30%, rgba(255, 255, 255, 0.4) 0%, transparent 50%),
+        /* Rock formations */
+        radial-gradient(ellipse at 30% 90%, rgba(105, 105, 105, 0.3) 0%, transparent 40%),
+        radial-gradient(ellipse at 70% 85%, rgba(128, 128, 128, 0.3) 0%, transparent 35%);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    filter: blur(2px);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Waterfall overlay effects */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        /* Water spray */
+        radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.3) 0%, transparent 20%),
+        radial-gradient(circle at 60% 35%, rgba(255, 255, 255, 0.25) 0%, transparent 25%),
+        radial-gradient(circle at 50% 45%, rgba(255, 255, 255, 0.2) 0%, transparent 15%),
+        /* Water mist */
+        linear-gradient(180deg, 
+            transparent 0%, 
+            rgba(135, 206, 235, 0.2) 20%, 
+            rgba(173, 216, 230, 0.3) 50%,
+            rgba(64, 224, 208, 0.2) 100%);
+    z-index: -2;
+    animation: waterfallFlow 15s infinite ease-in-out;
+}
+
+@keyframes waterfallFlow {
+    0%, 100% { 
+        transform: translateY(0) scale(1); 
+        opacity: 0.9;
+    }
+    50% { 
+        transform: translateY(-10px) scale(1.02); 
+        opacity: 1;
+    }
+}
+
+/* Water drops and particles */
+.water-drops {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.water-drops::before,
+.water-drops::after,
+.water-drops .drop1,
+.water-drops .drop2,
+.water-drops .drop3 {
+    content: '';
+    position: absolute;
+    width: 4px;
+    height: 8px;
+    background: radial-gradient(ellipse, rgba(135, 206, 235, 0.6) 0%, transparent 70%);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    animation: waterDropFall 3s infinite linear;
+}
+
+.water-drops::before {
+    top: -8px;
+    left: 25%;
+    animation-delay: 0s;
+}
+
+.water-drops::after {
+    top: -8px;
+    left: 45%;
+    animation-delay: 0.5s;
+}
+
+.water-drops .drop1 {
+    top: -8px;
+    left: 65%;
+    animation-delay: 1s;
+}
+
+.water-drops .drop2 {
+    top: -8px;
+    left: 35%;
+    animation-delay: 1.5s;
+}
+
+.water-drops .drop3 {
+    top: -8px;
+    left: 55%;
+    animation-delay: 2s;
+}
+
+@keyframes waterDropFall {
+    0% { 
+        transform: translateY(0); 
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.8;
+    }
+    90% {
+        opacity: 0.8;
+    }
+    100% { 
+        transform: translateY(100vh); 
+        opacity: 0;
+    }
+}
+
+/* Water waves */
+.water-waves {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.water-waves::before,
+.water-waves::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid rgba(135, 206, 235, 0.3);
+    border-radius: 50%;
+    animation: waterWaveExpand 4s infinite ease-out;
+}
+
+.water-waves::before {
+    animation-delay: 0s;
+}
+
+.water-waves::after {
+    animation-delay: 2s;
+}
+
+@keyframes waterWaveExpand {
+    0% { 
+        width: 50px; 
+        height: 50px; 
+        opacity: 0.6;
+    }
+    100% { 
+        width: 400px; 
+        height: 400px; 
+        opacity: 0;
+    }
+}
+
+/* Water ripples */
+.water-ripples {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.water-ripples::before,
+.water-ripples::after {
+    content: '';
+    position: absolute;
+    border: 1px solid rgba(173, 216, 230, 0.4);
+    border-radius: 50%;
+    animation: ripplePulse 6s infinite ease-in-out;
+}
+
+.water-ripples::before {
+    top: 30%;
+    left: 20%;
+    width: 80px;
+    height: 80px;
+    animation-delay: 0s;
+}
+
+.water-ripples::after {
+    bottom: 25%;
+    right: 25%;
+    width: 60px;
+    height: 60px;
+    animation-delay: 3s;
+}
+
+@keyframes ripplePulse {
+    0%, 100% { 
+        transform: scale(1); 
+        opacity: 0.3;
+    }
+    50% { 
+        transform: scale(1.3); 
+        opacity: 0.1;
+    }
+}
+
+/* Water mist effects */
+.water-mist {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.water-mist::before,
+.water-mist::after {
+    content: '';
+    position: absolute;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 60%);
+    border-radius: 50%;
+    animation: mistDrift 12s infinite ease-in-out;
+}
+
+.water-mist::before {
+    top: 20%;
+    left: 30%;
+    width: 100px;
+    height: 100px;
+    animation-delay: 0s;
+}
+
+.water-mist::after {
+    top: 40%;
+    right: 20%;
+    width: 80px;
+    height: 80px;
+    animation-delay: 4s;
+}
+
+@keyframes mistDrift {
+    0%, 100% { 
+        transform: translate(0, 0) scale(1); 
+        opacity: 0.4;
+    }
+    50% { 
+        transform: translate(15px, -10px) scale(1.2); 
+        opacity: 0.6;
+    }
+}
+
+/* Voice container styling */
+.container {
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 50px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    position: relative;
+    overflow: hidden;
+}
+
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.1) 0%, 
+        rgba(135, 206, 235, 0.05) 100%);
+    pointer-events: none;
+}
+
+.container > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Button styling with water theme */
+#recordBtn {
+    background: linear-gradient(135deg, #4682B4, #5F9EA0);
+    color: white;
+    padding: 15px 40px;
+    font-size: 18px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(70, 130, 180, 0.3);
+}
+
+#recordBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(70, 130, 180, 0.4);
+    background: linear-gradient(135deg, #5F9EA0, #4682B4);
+}
+
+#analyzeBtn {
+    background: linear-gradient(135deg, #20B2AA, #48D1CC);
+    color: white;
+    padding: 15px 30px;
+    font-size: 16px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(32, 178, 170, 0.3);
+}
+
+#analyzeBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(32, 178, 170, 0.4);
+    background: linear-gradient(135deg, #48D1CC, #20B2AA);
+}
+
+#nextButton {
+    background: linear-gradient(135deg, #40E0D0, #00CED1);
+    color: white;
+    padding: 15px 30px;
+    font-size: 16px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(64, 224, 208, 0.3);
+}
+
+#nextButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(64, 224, 208, 0.4);
+    background: linear-gradient(135deg, #00CED1, #40E0D0);
+}
+
+/* Status styling */
+#status {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #4682B4;
+    font-weight: 500;
+}
+
+/* Recording indicator */
+.recording-indicator {
+    display: none;
+    width: 20px;
+    height: 20px;
+    background: #4682B4;
+    border-radius: 50%;
+    margin: 15px auto;
+    animation: recordingBlink 1s infinite;
+}
+
+.recording-indicator.active {
+    display: block;
+}
+
+@keyframes recordingBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    body {
+        filter: blur(1.5px);
+    }
+    
+    .container {
+        padding: 30px;
+        margin: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        filter: blur(1px);
+    }
+}
