@@ -1,6 +1,6 @@
 flask==3.0.0
+gunicorn
 opencv-python-headless
 numpy<2
 librosa==0.10.1
-deepface==0.0.92
 pydub==0.25.1
