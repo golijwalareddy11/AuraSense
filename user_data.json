@@ -470,6 +470,27 @@
           "Standard recording length at 8.0 seconds for thorough analysis.",
           "Lower vocal energy at 0.0631, suggesting soft-spoken delivery."
         ]
+      },
+      {
+        "timestamp": "2026-04-13 13:49:41",
+        "questionnaire_score": 13,
+        "camera_score": 20,
+        "voice_score": 40,
+        "total_score": 73,
+        "percentage": 48,
+        "status": "Moderate",
+        "camera_reason": "Your facial expression looked neutral which may indicate mild stress.",
+        "voice_reason": [
+          "Normal pitch range at 159.5 Hz with balanced vocal characteristics.",
+          "Significant pitch variation detected, showing emotional expressiveness.",
+          "Quick speech pattern at 15.0 segments/min, showing energetic delivery.",
+          "Balanced vocal tone across different speaking contexts.",
+          "Minor vocal tremor present (jitter 0.0185), within normal variation range.",
+          "Natural pause patterns present in speech delivery.",
+          "Balanced voice activity (0.44), good mix of speech and pauses.",
+          "Standard recording length at 8.0 seconds for thorough analysis.",
+          "Moderate vocal energy at 0.1343, balanced speech volume."
+        ]
       }
     ]
   },
